@@ -77,7 +77,7 @@ var init=function(){
     document.getElementById("footer").innerHTML="";
     var link=document.createElement('link');
     link.rel="stylesheet";
-    link type="text/css";
+    link.type="text/css";
     link.href="./print.css";
     document.getElementsByTagName("head")[0].appendChild(link);
     item_draw();
