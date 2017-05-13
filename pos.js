@@ -73,6 +73,9 @@ var init=function(){
     receipt_draw();
     print();
     break;
+    case 4:
+    window.location.reload();
+    break;
   }
 };
 
@@ -188,7 +191,7 @@ var item_draw=function(){
   for (var key in item) {
     if(!(item[key][0] in item_table))continue;
     inner+="<div class=\"item\""
-    if(key==select)inner+=" style=\"background-color:#9999ff\""
+    if(mode==1&&key==select)inner+=" style=\"background-color:#9999ff\""
     inner+="><div class=\"item_name\">";
     inner+=item[key][1];
     inner+="</div><div class=\"item_price,print_hidden\">&yen";
