@@ -93,6 +93,10 @@
     font-size: 1.5rem;
     border: solid 1px #000;
   }
+  #item_total{
+    width:100%;
+    text-align: right;
+  }
 }
 
 @page{
