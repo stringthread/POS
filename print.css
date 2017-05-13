@@ -1,0 +1,13 @@
+body{
+  display:block;
+  width:80mm;
+}
+body>*{
+  margin:0 5mm;
+}
+body>*:first-child{
+  margin-top:10mm;
+}
+body>*:last-child{
+  margin-bottom: 10mm;
+}
