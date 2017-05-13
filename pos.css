@@ -3,7 +3,13 @@
   margin: 0 2mm;
 }
 .item{
-  margin: 5mm;
+  margin-top: 5mm;
+  margin-left: 0;
+}
+#item_total{
+  margin-top: 5mm;
+  margin-bottom: 10mm;
+  margin-left: 0;
 }
 
 @media print{
@@ -13,6 +19,12 @@
   }
   body>*{
     margin:0 5mm;
+  }
+  #subtitle{
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin:10mm 5mm;
   }
   .print_hidden{
     display: none;
@@ -81,4 +93,9 @@
     font-size: 1.5rem;
     border: solid 1px #000;
   }
+}
+
+@page{
+  width: 80mm;
+  margin:0;
 }

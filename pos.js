@@ -58,20 +58,14 @@ var init=function(){
     break;
     case 2:
     subtitle.innerHTML="商品確認"
-    container.innerHTML="<div id=\"item_container\"></div>";
+    container.innerHTML="<div id=\"item_container\"><div id=\"item_total\">合計金額 : &yen;0</div></div>";
     document.getElementById("method").innerHTML="Shift+Enterで確定<br>Escapeで前の画面";
     document.getElementById("receipt").innerHTML="";
     item_draw();
     document.removeEventListener('keydown',item_input);
-    document.addEventListener('keydown',function(e){
-      if(e.shiftKey&&e.key=="Enter"){
-        if(confirm("この情報で確定してよろしいですか\n(レシートが印刷されます)"))mode=3;
-        else mode=2;
-      }
-    });
     break;
     case 3:
-    subtitle.innerHTML="レシート<br>文実販売"
+    subtitle.innerHTML="レシート&mdash;文実販売"
     container.innerHTML="<div id=\"item_container\"></div>";
     document.getElementById("footer").innerHTML="";
     item_draw();
@@ -188,7 +182,7 @@ var item_draw=function(){
     inner+="</div></div>";
     total+=item[key][4]
   }
-  inner+="<div class=\"item_total\">合計金額 : &yen;";
+  inner+="<div id=\"item_total\">合計金額 : &yen;";
   inner+=total;
   inner+="</div>";
   item_container.innerHTML=inner;
