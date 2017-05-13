@@ -1,5 +1,5 @@
 var mode=0;
-var container;
+var container,subtitle;
 var deco=0;
 var serial=0;
 var item=[[0,"",0,0,0]];
@@ -24,10 +24,11 @@ window.onload=function(){init();};
 
 var init=function(){
   container=document.getElementById('container');
+  subtitle=document.getElementById("subtitle");
   tmp_int=0;
   tmp_arr=[0,"",0,0,0];
   is_barcode=false;
-  if(deco)document.getElementById("deco").innerHTML=deco_table[deco][1];
+  if(deco)document.getElementById("deco").innerHTML="デコ : "+deco_table[deco][1];
   else document.getElementById("deco").innerHTML="";
   document.addEventListener('keydown',function(e){
     if(e.shiftKey&&e.key=="Enter"){
@@ -41,20 +42,23 @@ var init=function(){
   });
   switch(mode){
     case 0:
-    container.innerHTML="<h2>デコ選択</h2><div class=\"input\" id=\"deco_input\"></div>";
+    subtitle.innerHTML="デコ選択"
+    container.innerHTML="<div class=\"input\" id=\"deco_input\"></div>";
     document.getElementById("method").innerHTML="Shift+Enterで次の画面<br>Escapeでリセット";
     document.getElementById("receipt").innerHTML="";
     document.addEventListener('keydown',deco_input);
     break;
     case 1:
-    container.innerHTML="<h2>商品入力</h2><div id=\"item_container\"></div>";
+    subtitle.innerHTML="商品入力"
+    container.innerHTML="<div id=\"item_container\"></div>";
     document.getElementById("method").innerHTML="Shift+Enterで次の画面<br>Escapeで前の画面<br>Backspaceで入力文字を1桁消去<br><br>商品のバーコードを読み込んだ後、数字キーで個数を入力";
     document.getElementById("receipt").innerHTML="";
     document.removeEventListener('keydown',deco_input);
     document.addEventListener('keydown',item_input);
     break;
     case 2:
-    container.innerHTML="<h2>商品確認</h2><div id=\"item_container\"></div>";
+    subtitle.innerHTML="商品確認"
+    container.innerHTML="<div id=\"item_container\"></div>";
     document.getElementById("method").innerHTML="Shift+Enterで確定<br>Escapeで前の画面";
     document.getElementById("receipt").innerHTML="";
     item_draw();
@@ -67,13 +71,9 @@ var init=function(){
     });
     break;
     case 3:
-    container.innerHTML="<h2>レシート&mdash;文実販売</h2><div id=\"item_container\"></div>";
+    subtitle.innerHTML="レシート<br>文実販売"
+    container.innerHTML="<div id=\"item_container\"></div>";
     document.getElementById("footer").innerHTML="";
-    var link=document.createElement('link');
-    link.rel="stylesheet";
-    link.type="text/css";
-    link.href="./print.css";
-    document.getElementsByTagName("head")[0].appendChild(link);
     item_draw();
     receipt_draw();
     print();
@@ -188,7 +188,7 @@ var item_draw=function(){
     inner+="</div></div>";
     total+=item[key][4]
   }
-  inner+="<div class=\"item_total\">";
+  inner+="<div class=\"item_total\">合計金額 : &yen;";
   inner+=total;
   inner+="</div>";
   item_container.innerHTML=inner;

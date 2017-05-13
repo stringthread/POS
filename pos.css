@@ -1,3 +1,29 @@
 .item>div{
   display: inline-block;
+  margin: 0 2mm;
+}
+.item{
+  margin: 5mm;
+}
+
+@media print {
+  body{
+    display:block;
+    width:80mm;
+  }
+  body>*{
+    margin:0 5mm;
+  }
+  .print_hidden{
+    display: none;
+  }
+  body>*:first-child:not(.print_hidden){
+    margin-top:10mm;
+  }
+  body>*:last-child:not(.print_hidden){
+    margin-bottom: 10mm;
+  }
+  #receipt{
+    transform: rotate(90deg);
+  }
 }
