@@ -6,7 +6,7 @@
   margin: 5mm;
 }
 
-@media print {
+@media print{
   body{
     display:block;
     width:80mm;
@@ -24,6 +24,61 @@
     margin-bottom: 10mm;
   }
   #receipt{
-    transform: rotate(90deg);
+    position:absolute;
+    left=0;
+    width: 160mm;
+    height: 80mm;
+    border-right: solid 1px #000;
+    transform-origin:bottom;
+    transform: rotate(-90deg);
+  }
+  #receipt_title{
+    margin: 5mm 0;
+    text-align: center;
+    font-size: 1.8rem;
+  }
+  #receipt_serial{
+    display: block;
+    text-align: right;
+    padding-right: 10mm;
+  }
+  #receipt_deco{
+    text-align: center;
+    font-size: 1.5rem;
+    text-decoration: underline;
+  }
+  #receipt_price{
+    text-align: center;
+    margin: 5mm 0;
+    font-size: 1.5rem;
+  }
+  #receipt_proviso{
+    text-align: center;
+    margin-top: 3mm;
+  }
+  #receipt_date{
+    display: inline-block;
+    position: absolute;
+    bottom:12mm;
+    right: 45mm;
+  }
+  #receipt_pub{
+    display: inline-block;
+    position: absolute;
+    bottom:5mm;
+    right: 40mm;
+    font-size: 0.8rem;
+  }
+  #receipt_stamp{
+    position: absolute;
+    bottom: 5mm;
+    right: 5mm;
+    width: 30mm;
+    height: 30mm;
+    margin: 0;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 1.5rem;
+    border: solid 1px #000;
   }
 }

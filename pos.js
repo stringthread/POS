@@ -36,7 +36,7 @@ var init=function(){
     }
     if(e.key=="Escape"){
       mode--;
-      if(mode<=0)document.Location.reload();
+      if(mode<=0)document.location.reload();
       init();
     }
   });
@@ -96,7 +96,7 @@ var fin=function(){
 var next=function(){
   if(!fin())return false;
   mode++;
-  if(mode==4)document.Location.reload();
+  if(mode==4)document.location.reload();
   init();
 }
 
