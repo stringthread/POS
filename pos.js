@@ -8,6 +8,7 @@ var tmp_arr=[0,"",0,0,0];
 var is_barcode=false;
 var ctr=0;
 var total=0;
+var select=0;
 const ID_BARCODE=";";
 
 var deco_table={
@@ -163,6 +164,21 @@ var item_input=function(e){
       item_draw();
       is_barcode=!is_barcode;
   }
+  if(e.key=="ArrowDown"){
+    select++;
+    if(select>ctr)select=ctr;
+    item_draw();
+  }
+  if(e.key=="ArrowUp"){
+    select--;
+    if(select<0)select=0;
+    item_draw();
+  }
+  if(e.key=="Delete"){
+    item.splice(select,1);
+    if(ctr>0)ctr--;
+    item_draw();
+  }
 };
 
 var item_draw=function(){
@@ -171,7 +187,9 @@ var item_draw=function(){
   total=0;
   for (var key in item) {
     if(!(item[key][0] in item_table))continue;
-    inner+="<div class=\"item\"><div class=\"item_name\">";
+    inner+="<div class=\"item\""
+    if(key==select)inner+=" style=\"background-color:#9999ff\""
+    inner+="><div class=\"item_name\">";
     inner+=item[key][1];
     inner+="</div><div class=\"item_price,print_hidden\">&yen";
     inner+=item[key][2];
