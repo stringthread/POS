@@ -29,6 +29,7 @@ var init=function(){
   tmp_int=0;
   tmp_arr=[0,"",0,0,0];
   is_barcode=false;
+  document.getElementById("date").innerHTML=getNow();
   if(deco)document.getElementById("deco").innerHTML="デコ : "+deco_table[deco][1];
   else document.getElementById("deco").innerHTML="";
   document.addEventListener('keydown',function(e){
