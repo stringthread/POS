@@ -250,7 +250,7 @@ var getNow=function(){
 }
 
 var getSerial=function(){
-/*  xhr.open("POST","./database.php");
+  xhr.open("POST","./database.php");
   xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
   xhr.send("mode=serial");
   xhr.onreadystatechange=function(){
@@ -265,11 +265,11 @@ var getSerial=function(){
        window.location.reload();
       }
     }
-  };*/
+  };
 };
 
 var sendDeal=function(){
-  /*var xhr=new XMLHttpRequest();
+  var xhr=new XMLHttpRequest();
   var data="mode=deal&serial=";
   data+=serial;
   data+="&item="
@@ -292,5 +292,5 @@ var sendDeal=function(){
          window.location.reload();
         }
       }
-    };*/
+    };
 };
