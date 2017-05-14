@@ -85,17 +85,11 @@ var fin=function(){
   switch (mode) {
     case 0:
     if(!deco)return false;
-    getSerial();
-    if(serial==-1){
-      window.alert("エラーが発生しました。もう一度やり直してください");
-      window.location.reload();
-    }
     break;
     case 1:
     if(!item[0])return false;
     break;
     case 3:
-    sendDeal();
     break;
   }
   return true;
@@ -248,51 +242,3 @@ var getNow=function(){
   str_date+="日"
   return str_date;
 }
-
-var getSerial=function(){
-  xhr.abort();
-  xhr.open("POST","./database.php");
-  xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xhr.send("mode=serial");
-  xhr.onreadystatechange=function(){
-    if(xhr.readyState==4){
-      if(xhr.status==200&&isFinite(xhr.responseText)){
-        serial=parseInt(xhr.responseText);
-      }else{
-        serial=-1;
-      }
-      if(serial==-1){
-        alert("エラーが発生しました。もう一度やり直してください");
-       window.location.reload();
-      }
-    }
-  };
-};
-
-var sendDeal=function(){
-  var xhr=new XMLHttpRequest();
-  xhr.abort();
-  var data="mode=deal&serial=";
-  data+=serial;
-  data+="&item="
-  for(k in item){
-    if(item[k][0] in item_table){
-    data+=item_table[item[k][0]][0];
-    data+='%2c';
-    data+=item[k][3];
-    data+='%2f';
-  }
-  }
-  alert(data);
-  xhr.open("POST","./database.php");
-  xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xhr.send(data);
-  xhr.onreadystatechange=function(){
-      if(xhr.readyState==4){
-        if(xhr.status!=200||xhr.responseText==-1){
-          alert("エラーが発生しました。もう一度やり直してください");
-         window.location.reload();
-        }
-      }
-    };
-};
