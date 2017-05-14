@@ -27,6 +27,13 @@
     text-align: center;
     margin:10mm 5mm;
   }
+  #receipt_caption{
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    margin-top: 5mm;
+  }
   .print_hidden{
     display: none;
   }
