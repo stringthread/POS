@@ -104,7 +104,6 @@ var fin=function(){
 var next=function(){
   if(!fin())return false;
   mode++;
-  if(mode==4)document.location.reload();
   init();
 }
 
@@ -270,7 +269,6 @@ var getSerial=function(){
 };
 
 var sendDeal=function(){
-  var xhr=new XMLHttpRequest();
   xhr.abort();
   var data="mode=deal&serial=";
   data+=serial;
@@ -289,10 +287,10 @@ var sendDeal=function(){
   xhr.send(data);
   xhr.onreadystatechange=function(){
       if(xhr.readyState==4){
-        if(xhr.status!=200||xhr.responseText==-1){
-          alert("エラーが発生しました。もう一度やり直してください");
-         window.location.reload();
+        if(xhr.responseText!=0){
+          alert("エラーが発生しました");
         }
+        window.location.reload();
       }
     };
 };
