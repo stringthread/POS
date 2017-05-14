@@ -1,5 +1,6 @@
 var mode=0;
 var container,subtitle;
+var xhr=new XMLHttpRequest();
 var deco=0;
 var serial=0;
 var item=[[0,"",0,0,0]];
@@ -17,8 +18,8 @@ var deco_table={
 };
 
 var item_table={
-  123456789:["test",300],
-  987654321:["test2",500]
+  123456789:[0,"test",300],
+  987654321:[1,"test2",500]
 };
 
 window.onload=function(){init();};
@@ -84,9 +85,17 @@ var fin=function(){
   switch (mode) {
     case 0:
     if(!deco)return false;
+    getSerial();
+    if(serial==-1){
+      window.alert("エラーが発生しました。もう一度やり直してください");
+      window.location.reload();
+    }
     break;
     case 1:
     if(!item[0])return false;
+    break;
+    case 3:
+    sendDeal();
     break;
   }
   return true;
@@ -119,16 +128,15 @@ var item_input=function(e){
   if(isFinite(e.key)){
     tmp_int=tmp_int*10+parseInt(e.key);
     if(!is_barcode){
-      tmp_arr[3]=tmp_int;
-      tmp_arr[4]=tmp_arr[2]*tmp_arr[3];
-      item[ctr]=tmp_arr.slice();
+      item[select][3]=tmp_int;
+      item[select][4]=item[select][2]*item[select][3];
       item_draw();
     }
   }
   if(e.key=="Backspace"){
     if(!is_barcode){
       tmp_int=Math.floor(tmp_int/10);
-      item[ctr][3]=tmp_int;
+      item[select][3]=tmp_int;
       item_draw();
     }
   }
@@ -142,8 +150,8 @@ var item_input=function(e){
         tmp_arr[3]=0;
         tmp_arr[4]=0;
       }else{
-      tmp_arr[1]=item_table[tmp_arr[0]][0];
-      tmp_arr[2]=item_table[tmp_arr[0]][1];
+      tmp_arr[1]=item_table[tmp_arr[0]][1];
+      tmp_arr[2]=item_table[tmp_arr[0]][2];
       if(tmp_arr[3]){
         tmp_arr[4]=tmp_arr[2]*tmp_arr[3];
         item[ctr]=tmp_arr.slice();
@@ -157,12 +165,13 @@ var item_input=function(e){
       tmp_arr[3]=tmp_int;
       tmp_int=0;
       if(tmp_arr[0] in item_table){
-        tmp_arr[1]=item_table[tmp_arr[0]][0];
-        tmp_arr[2]=item_table[tmp_arr[0]][1];
+        tmp_arr[1]=item_table[tmp_arr[0]][1];
+        tmp_arr[2]=item_table[tmp_arr[0]][2];
         tmp_arr[4]=tmp_arr[2]*tmp_arr[3];
-        item[ctr]=tmp_arr.slice();
+        item[select]=tmp_arr.slice();
         tmp_arr=[0,"",0,0,0];
         item_append();
+        select=ctr;
       }
     }
       item_draw();
@@ -239,3 +248,49 @@ var getNow=function(){
   str_date+="日"
   return str_date;
 }
+
+var getSerial=function(){
+  xhr.open("POST","./database.php");
+  xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  xhr.send("mode=serial");
+  xhr.onreadystatechange=function(){
+    if(xhr.readyState==4){
+      if(xhr.status==200&&isFinite(xhr.responseText)){
+        serial=parseInt(xhr.responseText);
+      }else{
+        serial=-1;
+      }
+      if(serial==-1){
+        alert("エラーが発生しました。もう一度やり直してください");
+       window.location.reload();
+      }
+    }
+  };
+};
+
+var sendDeal=function(){
+  /*var xhr=new XMLHttpRequest();
+  var data="mode=deal&serial=";
+  data+=serial;
+  data+="&item="
+  for(k in item){
+    if(item[k][0] in item_table){
+    data+=item_table[item[k][0]][0];
+    data+='%2c';
+    data+=item[k][3];
+    data+='%2f';
+  }
+  }
+  alert(data);
+  xhr.open("POST","./database.php");
+  xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  xhr.send(data);
+  xhr.onreadystatechange=function(){
+      if(xhr.readyState==4){
+        if(xhr.status!=200||xhr.responseText==-1){
+          alert("エラーが発生しました。もう一度やり直してください");
+         window.location.reload();
+        }
+      }
+    };*/
+};
