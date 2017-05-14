@@ -15,12 +15,11 @@ try{
     break;
     case 'deal':
     if(array_key_exists('item',$_POST)){
-      $stmt=$db->prepare("INSERT INTO log VALUES (?,?);");
+      $stmt=$db->prepare("INSERT INTO log (id,item) VALUES (?,?);");
       $stmt->bind_param('is',$_POST['serial'],$_POST['item']);
       $stmt->execute();
       echo 0;
-    }
-    echo -1;
+    }else echo -1;
     break;
   }
   exit;

@@ -104,7 +104,6 @@ var fin=function(){
 var next=function(){
   if(!fin())return false;
   mode++;
-  if(mode==4)document.location.reload();
   init();
 }
 
@@ -289,10 +288,10 @@ var sendDeal=function(){
   xhr.send(data);
   xhr.onreadystatechange=function(){
       if(xhr.readyState==4){
-        if(xhr.status!=200||xhr.responseText==-1){
-          alert("エラーが発生しました。もう一度やり直してください");
-         window.location.reload();
+        if((xhr.status!=200&&xhr.status!=204&&xhr.status!=304)||xhr.responseText==-1){
+          alert("エラーが発生しました");
         }
+        window.location.reload();
       }
     };
 };
