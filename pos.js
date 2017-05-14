@@ -288,7 +288,7 @@ var sendDeal=function(){
   xhr.send(data);
   xhr.onreadystatechange=function(){
       if(xhr.readyState==4){
-        if((xhr.status!=200&&xhr.status!=204&&xhr.status!=304)||xhr.responseText==-1){
+        if(xhr.responseText!=0){
           alert("エラーが発生しました");
         }
         window.location.reload();
