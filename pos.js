@@ -250,7 +250,7 @@ var getNow=function(){
 }
 
 var getSerial=function(){
-  xhr.open("POST","./database.php");
+/*  xhr.open("POST","./database.php");
   xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
   xhr.send("mode=serial");
   xhr.onreadystatechange=function(){
@@ -265,7 +265,7 @@ var getSerial=function(){
        window.location.reload();
       }
     }
-  };
+  };*/
 };
 
 var sendDeal=function(){
