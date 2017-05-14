@@ -68,7 +68,7 @@ var init=function(){
     document.removeEventListener('keydown',item_input);
     break;
     case 3:
-    subtitle.innerHTML="レシート&mdash;文実販売"
+    subtitle.innerHTML="文実販売<div id=\"receipt_caption\">レシート</div>"
     container.innerHTML="<div id=\"item_container\"></div>";
     document.getElementById("footer").innerHTML="";
     item_draw();
