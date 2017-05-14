@@ -269,7 +269,6 @@ var getSerial=function(){
 };
 
 var sendDeal=function(){
-  var xhr=new XMLHttpRequest();
   xhr.abort();
   var data="mode=deal&serial=";
   data+=serial;
