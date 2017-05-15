@@ -262,7 +262,9 @@ var sendDeal=function(){
   xhr.abort();
   var data="mode=deal&serial=";
   data+=serial;
-  data+="&item="
+  data+="&deco=";
+  data+=deco;
+  data+="&item=";
   for(k in item){
     if(item[k][0] in item_table){
     data+=item_table[item[k][0]][0];

@@ -15,8 +15,8 @@ try{
     break;
     case 'deal':
     if(array_key_exists('item',$_POST)){
-      $stmt=$db->prepare("INSERT INTO log (id,item) VALUES (?,?);");
-      $stmt->bind_param('is',$_POST['serial'],$_POST['item']);
+      $stmt=$db->prepare("INSERT INTO log (id,deco,item) VALUES (?,?,?);");
+      $stmt->bind_param('iis',$_POST['serial'],$_POST['deco'],$_POST['item']);
       $stmt->execute();
       echo 0;
     }else echo -1;
