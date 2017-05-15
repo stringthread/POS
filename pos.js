@@ -12,16 +12,6 @@ var total=0;
 var select=0;
 const ID_BARCODE=";";
 
-var deco_table={
-  123:[0,"1-1"],
-  124:[1,"1-2"]
-};
-
-var item_table={
-  123456789:[0,"test",300],
-  987654321:[1,"test2",500]
-};
-
 window.onload=function(){init();};
 
 var init=function(){
