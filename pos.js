@@ -260,19 +260,17 @@ var getSerial=function(){
 
 var sendDeal=function(){
   xhr.abort();
+  tmp_arr=[[]];
+  for (var key in item) {
+    var item_code=item[key][0];
+    tmp_arr[key]=[item_table[item_code][0],item[key][3]];
+  }
   var data="mode=deal&serial=";
   data+=serial;
   data+="&deco=";
   data+=deco;
   data+="&item=";
-  for(k in item){
-    if(item[k][0] in item_table){
-    data+=item_table[item[k][0]][0];
-    data+='%2c';
-    data+=item[k][3];
-    data+='%2f';
-  }
-  }
+  data+=encodeURIComponent(JSON.stringify(tmp_arr));
   alert(data);
   xhr.open("POST","./database.php");
   xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");

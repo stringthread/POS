@@ -21,6 +21,38 @@ try{
       echo 0;
     }else echo -1;
     break;
+    case 'log_deco':
+    $stmt=$db->prepare('SELECT id,item,date FROM log WHERE deco=?;');
+    $stmt->bind_param('i',$_POST['deco']);
+    $stmt->execute();
+    $result=$stmt->get_result();
+    if($result->num_rows==0){
+      echo json_encode([-1,-1,'']);
+      $stmt->close();
+      break;
+    }
+    $res=array();
+    for($i=0;$tmp=$result->fetch_assoc();$i++){
+      $res[$i]=$tmp;
+    }
+    echo json_encode($res);
+    $stmt->close();
+    break;
+    case 'log_serial':
+    $stmt=$db->prepare("SELECT deco,item,date FROM log WHERE id=?;");
+    $stmt->bind_param('i',$_POST['serial']);
+    $stmt->execute();
+    $result=$stmt->get_result();
+    if($result->num_rows==0){
+      echo json_encode([-1,-1,'']);
+      $stmt->close();
+      break;
+    }
+    $res=$result->fetch_assoc();
+//    $res['date']=date('Y/m/d',$res['date']);
+    echo json_encode($res);
+    $stmt->close();
+    break;
   }
   exit;
 }catch(Exception $e){
