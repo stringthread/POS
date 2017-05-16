@@ -33,39 +33,55 @@ var log_serial=function(){
   if(document.getElementById("serial")){
     mode=M_SERIAL;
     serial=document.getElementById("serial").value;
+    if(!serial.isInteger()){
+      serial=0;
+      document.getElementById("serial").value="";
+      return;
+    }
     init();
   };
 }
 var draw_from_deco=function(){
-  xhr.open("POST","./database.php");
-  xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xhr.send("mode=log_deco&deco="+deco);
-  xhr.onreadystatechange=function(){
-    if(xhr.readyState==4){
-      alert(xhr.responseText);
-      var res_arr=JSON.parse(xhr.responseText);
-      var tmp_str="<div id=\"table\">";
-      for (var key in res_arr) {
-        res_arr[key]['item']=JSON.parse(res_arr[key]['item']);
-        tmp_str+="<div class=\"row\"><div class=\"id\">";
-        tmp_str+=res_arr[key]['id'];
-        tmp_str+="</div><div class=\"item_set\">";
-        for(var k2 in res_arr[key]['item']){
-          tmp_str+="<div class=\"item\">";
-          tmp_str+="<div class=\"name\">";
-          tmp_str+=item_table[item_barcode[res_arr[key]['item'][k2][0]]][1];
-          tmp_str+="</div><div class=\"num\">";
-          tmp_str+=res_arr[key]['item'][k2][1];
+  if(deco in deco_table){
+    xhr.open("POST","./database.php");
+    xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    xhr.send("mode=log_deco&deco="+deco);
+    xhr.onreadystatechange=function(){
+      if(xhr.readyState==4){
+        if(xhr.responseText==0){
+          container.innerHTML=deco_table[deco][1]+" : 該当なし";
+          return;
+        }
+        if(xhr.responseText==-1){
+          container.innerHTML="エラーが発生しました";
+          return;
+        }
+        var res_arr=JSON.parse(xhr.responseText);
+        var tmp_str="<div id=\"table\">";
+        for (var key in res_arr) {
+          res_arr[key]['item']=JSON.parse(res_arr[key]['item']);
+          tmp_str+="<div class=\"row\"><div class=\"id\">";
+          tmp_str+=res_arr[key]['id'];
+          tmp_str+="</div><div class=\"item_set\">";
+          for(var k2 in res_arr[key]['item']){
+            tmp_str+="<div class=\"item\">";
+            tmp_str+="<div class=\"name\">";
+            tmp_str+=item_table[item_barcode[res_arr[key]['item'][k2][0]]][1];
+            tmp_str+="</div><div class=\"num\">";
+            tmp_str+=res_arr[key]['item'][k2][1];
+            tmp_str+="</div></div>";
+          }
+          tmp_str+="</div><div class=\"date\">";
+          tmp_str+=res_arr[key]['date'];
           tmp_str+="</div></div>";
         }
-        tmp_str+="</div><div class=\"date\">";
-        tmp_str+=res_arr[key]['date'];
-        tmp_str+="</div></div>";
+        tmp_str+="</div>";
+        container.innerHTML=tmp_str;
       }
-      tmp_str+="</div>";
-      container.innerHTML=tmp_str;
-    }
-  };
+    };
+  }else{
+    container.innerHTML="エラー : バーコードが間違っています。やり直してください";
+  }
 };
 var draw_from_serial=function(){
   xhr.open("POST","./database.php");
@@ -73,6 +89,14 @@ var draw_from_serial=function(){
   xhr.send("mode=log_serial&serial="+serial);
   xhr.onreadystatechange=function(){
     if(xhr.readyState==4){
+      if(xhr.responseText==0){
+        container.innerHTML=serial+" : 該当なし";
+        return;
+      }
+      if(xhr.responseText==-1){
+        container.innerHTML="エラーが発生しました";
+        return;
+      }
       var res_arr=JSON.parse(xhr.responseText);
       res_arr['item']=JSON.parse(res_arr['item']);
       var tmp_str="<div id=\"table;\">";

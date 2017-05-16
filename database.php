@@ -27,7 +27,7 @@ try{
     $stmt->execute();
     $result=$stmt->get_result();
     if($result->num_rows==0){
-      echo json_encode([-1,-1,'']);
+      echo 0;
       $stmt->close();
       break;
     }
@@ -44,12 +44,11 @@ try{
     $stmt->execute();
     $result=$stmt->get_result();
     if($result->num_rows==0){
-      echo json_encode([-1,-1,'']);
+      echo 0;
       $stmt->close();
       break;
     }
     $res=$result->fetch_assoc();
-//    $res['date']=date('Y/m/d',$res['date']);
     echo json_encode($res);
     $stmt->close();
     break;

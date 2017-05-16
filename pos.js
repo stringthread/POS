@@ -271,7 +271,6 @@ var sendDeal=function(){
   data+=deco;
   data+="&item=";
   data+=encodeURIComponent(JSON.stringify(tmp_arr));
-  alert(data);
   xhr.open("POST","./database.php");
   xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
   xhr.send(data);
