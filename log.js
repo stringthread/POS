@@ -9,7 +9,7 @@ var init=function(){
   container=document.getElementById("container");
   switch(mode){
     case 0:
-    subtitle.innerHTML="種別選択"
+    subtitle.innerHTML="種別選択";
     container.innerHTML="<div id=\"deco_select\"><input type=\"text\" id=\"deco_code\"><button onclick=\"log_deco();\">デコ別記録</button></div><div id=\"serial_select\"><input type=\"text\" id=\"serial\"><button onclick=\"log_serial();\">番号から</button></div>";
     break;
     case M_DECO:
