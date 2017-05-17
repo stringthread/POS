@@ -33,7 +33,7 @@ var log_serial=function(){
   if(document.getElementById("serial")){
     mode=M_SERIAL;
     serial=document.getElementById("serial").value;
-    if(!serial.isInteger()){
+    if(!isFinite(serial)){
       serial=0;
       document.getElementById("serial").value="";
       return;
