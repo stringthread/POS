@@ -11,4 +11,4 @@ var item_table={
 var item_barcode={
   0:123456789,
   1:987654321
-}
+};

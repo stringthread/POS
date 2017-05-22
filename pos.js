@@ -12,8 +12,6 @@ var total=0;
 var select=0;
 const ID_BARCODE=";";
 
-window.onload=function(){init();};
-
 var init=function(){
   container=document.getElementById('container');
   subtitle=document.getElementById("subtitle");
@@ -35,22 +33,22 @@ var init=function(){
   });
   switch(mode){
     case 0:
-    subtitle.innerHTML="デコ選択"
+    subtitle.innerHTML="デコ選択";
     container.innerHTML="<div class=\"input\" id=\"deco_input\"></div>";
     document.getElementById("method").innerHTML="Shift+Enterで次の画面<br>Escapeでリセット";
     document.getElementById("receipt").innerHTML="";
     document.addEventListener('keydown',deco_input);
     break;
     case 1:
-    subtitle.innerHTML="商品入力"
-    container.innerHTML="<div id=\"item_container\"></div>";
-    document.getElementById("method").innerHTML="Shift+Enterで次の画面<br>Escapeで前の画面<br>Backspaceで入力文字を1桁消去<br><br>商品のバーコードを読み込んだ後、数字キーで個数を入力";
+    subtitle.innerHTML="商品入力";
+    container.innerHTML="<div id=\"item_container\"><div id=\"item_total\">合計金額 : &yen;0</div></div>";
+    document.getElementById("method").innerHTML="Shift+Enterで次の画面<br>Escapeで前の画面<br>Backspaceで個数を1桁消去<br>Deleteキーで品目を削除<br>上下キーで品目を選択<br><br>商品のバーコードを読み込んだ後、数字キーで個数を入力";
     document.getElementById("receipt").innerHTML="";
     document.removeEventListener('keydown',deco_input);
     document.addEventListener('keydown',item_input);
     break;
     case 2:
-    subtitle.innerHTML="商品確認"
+    subtitle.innerHTML="商品確認";
     container.innerHTML="<div id=\"item_container\"><div id=\"item_total\">合計金額 : &yen;0</div></div>";
     document.getElementById("method").innerHTML="Shift+Enterで確定<br>Escapeで前の画面";
     document.getElementById("receipt").innerHTML="";
@@ -58,7 +56,7 @@ var init=function(){
     document.removeEventListener('keydown',item_input);
     break;
     case 3:
-    subtitle.innerHTML="文実販売<div id=\"receipt_caption\">レシート</div>"
+    subtitle.innerHTML="文実販売<div id=\"receipt_caption\">レシート</div>";
     container.innerHTML="<div id=\"item_container\"></div>";
     document.getElementById("footer").innerHTML="";
     item_draw();
@@ -103,9 +101,9 @@ var deco_input=function(e){
       if(tmp_int in deco_table){
         deco=tmp_int;
         document.getElementById("deco_input").innerHTML=deco_table[tmp_int][1];
-        tmp_int=0;
       }
     }
+    tmp_int=0;
     is_barcode=!is_barcode;
   }
   if(is_barcode&&isFinite(e.key)){
@@ -115,6 +113,7 @@ var deco_input=function(e){
 
 var item_input=function(e){
   if(isFinite(e.key)){
+    if(!is_barcode)tmp_int=item[select][3];
     tmp_int=tmp_int*10+parseInt(e.key);
     if(!is_barcode){
       item[select][3]=tmp_int;
@@ -124,8 +123,8 @@ var item_input=function(e){
   }
   if(e.key=="Backspace"){
     if(!is_barcode){
+      item[select][3]=Math.floor(item[select][3]/10);
       tmp_int=Math.floor(tmp_int/10);
-      item[select][3]=tmp_int;
       item_draw();
     }
   }
@@ -133,38 +132,13 @@ var item_input=function(e){
     if(is_barcode){
       tmp_arr[0]=tmp_int;
       tmp_int=0;
-      if(!(tmp_arr[0] in item_table)){
-        tmp_arr[1]="err";
-        tmp_arr[2]=0;
-        tmp_arr[3]=0;
-        tmp_arr[4]=0;
-      }else{
-      tmp_arr[1]=item_table[tmp_arr[0]][1];
-      tmp_arr[2]=item_table[tmp_arr[0]][2];
-      if(tmp_arr[3]){
-        tmp_arr[4]=tmp_arr[2]*tmp_arr[3];
-        item[ctr]=tmp_arr.slice();
-        tmp_arr=[0,"",0,0,0];
-        item_append();
-      }else{
-        item[ctr]=tmp_arr.slice();
-      }
-    }
     }else{
       tmp_arr[3]=tmp_int;
       tmp_int=0;
-      if(tmp_arr[0] in item_table){
-        tmp_arr[1]=item_table[tmp_arr[0]][1];
-        tmp_arr[2]=item_table[tmp_arr[0]][2];
-        tmp_arr[4]=tmp_arr[2]*tmp_arr[3];
-        item[select]=tmp_arr.slice();
-        tmp_arr=[0,"",0,0,0];
-        item_append();
-        select=ctr;
-      }
     }
-      item_draw();
-      is_barcode=!is_barcode;
+    item_append();
+    item_draw();
+    is_barcode=!is_barcode;
   }
   if(e.key=="ArrowDown"){
     select++;
@@ -189,8 +163,8 @@ var item_draw=function(){
   total=0;
   for (var key in item) {
     if(!(item[key][0] in item_table))continue;
-    inner+="<div class=\"item\""
-    if(mode==1&&key==select)inner+=" style=\"background-color:#9999ff\""
+    inner+="<div class=\"item\"";
+    if(mode==1&&key==select)inner+=" style=\"background-color:#9999ff\"";
     inner+="><div class=\"item_name\">";
     inner+=item[key][1];
     inner+="</div><div class=\"item_price,print_hidden\">&yen";
@@ -200,7 +174,7 @@ var item_draw=function(){
     inner+="</div><div class=\"item_subtotal\">小計&nbsp&yen";
     inner+=item[key][4];
     inner+="</div></div>";
-    total+=item[key][4]
+    total+=item[key][4];
   }
   inner+="<div id=\"item_total\">合計金額 : &yen;";
   inner+=total;
@@ -209,8 +183,18 @@ var item_draw=function(){
 }
 
 var item_append=function(){
-  ctr++;
-  item[ctr]=[0,"",0,0,0];
+  if(tmp_arr[0] in item_table){
+    tmp_arr[1]=item_table[tmp_arr[0]][1];
+    tmp_arr[2]=item_table[tmp_arr[0]][2];
+    tmp_arr[4]=tmp_arr[2]*tmp_arr[3];
+    item[ctr]=tmp_arr.slice();
+    if(item[ctr][3]){
+      tmp_arr=[0,"",0,0,0];
+      ctr++;
+      select=ctr;
+      item[ctr]=[0,"",0,0,0];
+    }
+  }
 };
 
 var receipt_draw=function(){
@@ -234,7 +218,7 @@ var getNow=function(){
   str_date+=date.getMonth()+1;
   str_date+="月";
   str_date+=date.getDate();
-  str_date+="日"
+  str_date+="日";
   return str_date;
 }
 
@@ -283,3 +267,5 @@ var sendDeal=function(){
       }
     };
 };
+
+window.onload=init;
