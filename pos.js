@@ -5,7 +5,6 @@ var deco=0;
 var serial=0;
 var item=[[0,"",0,0,0]];
 var tmp_int=0;
-var tmp_arr=[0,"",0,0,0];
 var is_barcode=false;
 var ctr=0;
 var total=0;
@@ -113,9 +112,9 @@ var deco_input=function(e){
 
 var item_input=function(e){
   if(isFinite(e.key)){
-    if(!is_barcode)tmp_int=item[select][3];
+    if(!is_barcode&&select<=ctr)tmp_int=item[select][3];
     tmp_int=tmp_int*10+parseInt(e.key);
-    if(!is_barcode){
+    if(!is_barcode&&select<=ctr){
       item[select][3]=tmp_int;
       item[select][4]=item[select][2]*item[select][3];
       item_draw();
@@ -130,10 +129,10 @@ var item_input=function(e){
   }
   if(e.key==ID_BARCODE){
     if(is_barcode){
-      tmp_arr[0]=tmp_int;
+      item[ctr][0]=tmp_int;
       tmp_int=0;
-    }else{
-      tmp_arr[3]=tmp_int;
+    }else if(select<=ctr&&ctr!=0){
+      item[select][3]=tmp_int;
       tmp_int=0;
     }
     item_append();
@@ -153,6 +152,7 @@ var item_input=function(e){
   if(e.key=="Delete"){
     item.splice(select,1);
     if(ctr>0)ctr--;
+    if(item.length==0)item[0]=[0,"",0,0,0];
     item_draw();
   }
 };
@@ -183,17 +183,20 @@ var item_draw=function(){
 }
 
 var item_append=function(){
-  if(tmp_arr[0] in item_table){
-    tmp_arr[1]=item_table[tmp_arr[0]][1];
-    tmp_arr[2]=item_table[tmp_arr[0]][2];
-    tmp_arr[4]=tmp_arr[2]*tmp_arr[3];
-    item[ctr]=tmp_arr.slice();
+  if(item[ctr][0] in item_table){
+    item[ctr][1]=item_table[item[ctr][0]][1];
+    item[ctr][2]=item_table[item[ctr][0]][2];
+    item[ctr][4]=item[ctr][2]*item[ctr][3];
     if(item[ctr][3]){
-      tmp_arr=[0,"",0,0,0];
       ctr++;
       select=ctr;
       item[ctr]=[0,"",0,0,0];
     }
+  }else if(item[ctr][0]!=0){
+    window.alert("バーコードの読み取りに失敗しました。読み直してください");
+    item.splice(select,1);
+    if(ctr>0)ctr--;
+    if(item.length==0)item[0]=[0,"",0,0,0];
   }
 };
 
@@ -244,7 +247,7 @@ var getSerial=function(){
 
 var sendDeal=function(){
   xhr.abort();
-  tmp_arr=[[]];
+  var tmp_arr=[[]];
   for (var key in item) {
     var item_code=item[key][0];
     tmp_arr[key]=[item_table[item_code][0],item[key][3]];
