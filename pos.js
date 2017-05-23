@@ -100,6 +100,8 @@ var deco_input=function(e){
       if(tmp_int in deco_table){
         deco=tmp_int;
         document.getElementById("deco_input").innerHTML=deco_table[tmp_int][1];
+      }else{
+        window.alert("バーコードの読み取りに失敗しました。読み直してください");
       }
     }
     tmp_int=0;
