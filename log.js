@@ -1,5 +1,6 @@
 var xhr=new XMLHttpRequest();
 var mode=0;
+var total=0;
 var deco,serial;
 var container,subtitle;
 const M_DECO=1;
@@ -11,6 +12,10 @@ var init=function(){
     case 0:
     subtitle.innerHTML="種別選択";
     container.innerHTML="<div id=\"deco_select\"><input type=\"text\" id=\"deco_code\"><button onclick=\"log_deco();\">デコ別記録</button></div><div id=\"serial_select\"><input type=\"text\" id=\"serial\"><button onclick=\"log_serial();\">番号から</button></div>";
+    var deco_code=document.getElementById("deco_code");
+    deco_code.oninput=function(){
+      deco_code.value=deco_code.value.replace(/;/g,"");
+    }
     break;
     case M_DECO:
     subtitle.innerHTML="デコ別記録";
@@ -59,6 +64,7 @@ var draw_from_deco=function(){
         var res_arr=JSON.parse(xhr.responseText);
         var tmp_str="<div id=\"table\">";
         for (var key in res_arr) {
+          total=0;
           res_arr[key]['item']=JSON.parse(res_arr[key]['item']);
           tmp_str+="<div class=\"row\"><div class=\"id\">";
           tmp_str+=res_arr[key]['id'];
@@ -69,8 +75,13 @@ var draw_from_deco=function(){
             tmp_str+=item_table[item_barcode[res_arr[key]['item'][k2][0]]][1];
             tmp_str+="</div><div class=\"num\">";
             tmp_str+=res_arr[key]['item'][k2][1];
+            tmp_str+="</div><div class=\"subtotal\">";
+            tmp_str+=res_arr[key]['item'][k2][1]*item_table[item_barcode[res_arr[key]['item'][k2][0]]][2];
             tmp_str+="</div></div>";
+            total+=res_arr[key]['item'][k2][1]*item_table[item_barcode[res_arr[key]['item'][k2][0]]][2];
           }
+          tmp_str+="</div><div class=\"total\">";
+          tmp_str+=total
           tmp_str+="</div><div class=\"date\">";
           tmp_str+=res_arr[key]['date'];
           tmp_str+="</div></div>";
@@ -105,13 +116,19 @@ var draw_from_serial=function(){
       tmp_str+=deco_table[res_arr['deco']][1];
       tmp_str+="</div><div class=\"item_set\">";
       for (var key in res_arr['item']){
+        total=0;
         tmp_str+="<div class=\"item\">";
         tmp_str+="<div class=\"name\">";
         tmp_str+=item_table[item_barcode[res_arr['item'][key][0]]][1];
         tmp_str+="</div><div class=\"num\">";
         tmp_str+=res_arr['item'][key][1];
+        tmp_str+="</div><div class=\"subtotal\">";
+        tmp_str+=res_arr['item'][key][1]*item_table[item_barcode[res_arr['item'][key][0]]][2];
         tmp_str+="</div></div>";
+        total+=res_arr['item'][key][1]*item_table[item_barcode[res_arr['item'][key][0]]][2];
       }
+      tmp_str+="</div><div class=\"total\">";
+      tmp_str+=total;
       tmp_str+="</div><div class=\"date\">";
       tmp_str+=res_arr['date'];
       tmp_str+="</div></div>";

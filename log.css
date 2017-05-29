@@ -1,3 +1,6 @@
+.item{
+  padding-bottom: 0.5rem;
+}
 .item>*{
   display: inline-block;
   margin-right: 1rem;
@@ -8,12 +11,28 @@
 #table .id::before{
   content: "ID: ";
 }
+#table .item_set{
+  margin-top: 0.5rem;
+}
 .item>.num::after{
   content: " ケ";
   font-size: 0.8rem;
 }
+.item>.subtotal::before{
+  content: "小計: \0A5";
+}
+#table .date{
+  padding-top: 0.5rem;
+}
 #table .date::before{
   content: "日時: ";
+  margin-left: 1rem;
+}
+#table .total{
+  padding-top: 0.5rem;
+}
+#table .total::before{
+  content: "合計: \0A5";
   margin-left: 1rem;
 }
 .item_set{
@@ -22,5 +41,5 @@
   border-left: solid 1px #000000;
 }
 .row{
-  margin:1rem;
+  margin: 2rem 1rem;
 }
