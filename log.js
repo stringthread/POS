@@ -99,20 +99,20 @@ var draw_from_serial=function(){
       }
       var res_arr=JSON.parse(xhr.responseText);
       res_arr['item']=JSON.parse(res_arr['item']);
-      var tmp_str="<div id=\"table;\">";
+      var tmp_str="<div id=\"table\">";
       tmp_str+="<div class=\"row\">";
       tmp_str+="<div class=\"deco\">";
       tmp_str+=deco_table[res_arr['deco']][1];
-      tmp_str+="</div>";
+      tmp_str+="</div><div class=\"item_set\">";
       for (var key in res_arr['item']){
         tmp_str+="<div class=\"item\">";
         tmp_str+="<div class=\"name\">";
         tmp_str+=item_table[item_barcode[res_arr['item'][key][0]]][1];
         tmp_str+="</div><div class=\"num\">";
         tmp_str+=res_arr['item'][key][1];
-        tmp_str+="</div></div>"
+        tmp_str+="</div></div>";
       }
-      tmp_str+="</div></div><div class=\"date\">";
+      tmp_str+="</div><div class=\"date\">";
       tmp_str+=res_arr['date'];
       tmp_str+="</div></div>";
       container.innerHTML=tmp_str;

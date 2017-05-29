@@ -1,0 +1,26 @@
+.item>*{
+  display: inline-block;
+  margin-right: 1rem;
+}
+#table .deco::before{
+  content: "デコ: ";
+}
+#table .id::before{
+  content: "ID: ";
+}
+.item>.num::after{
+  content: " ケ";
+  font-size: 0.8rem;
+}
+#table .date::before{
+  content: "日時: ";
+  margin-left: 1rem;
+}
+.item_set{
+  margin-left: 1rem;
+  padding-left: 1rem;
+  border-left: solid 1px #000000;
+}
+.row{
+  margin:1rem;
+}
