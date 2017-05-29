@@ -60,9 +60,8 @@ var init=function(){
     document.getElementById("footer").innerHTML="";
     item_draw();
     receipt_draw();
+    sendDeal();
     print();
-    break;
-    case 4:
     window.location.reload();
     break;
   }
@@ -80,9 +79,6 @@ var fin=function(){
     break;
     case 1:
     if(!item[0])return false;
-    break;
-    case 3:
-    sendDeal();
     break;
   }
   return true;
