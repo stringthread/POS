@@ -13,6 +13,10 @@
 }
 
 @media print{
+  @page{
+    width: 80mm;
+    margin:0;
+  }
   body{
     position: absolute;
     display:block;
@@ -25,7 +29,20 @@
     display: block;
     width: 100%;
     text-align: center;
-    margin:10mm 5mm;
+    margin:10mm auto;
+  }
+  #deco{
+    margin: 8mm 6mm;
+  }
+  .item{
+    white-space: pre-wrap;
+  }
+  .item_price{
+    margin: 5mm 0;
+  }
+  .item_subtotal{
+    position: relative;
+    left: 4em;
   }
   #receipt_caption{
     display:block;
@@ -85,6 +102,7 @@
     position: absolute;
     bottom:12mm;
     right: 45mm;
+    margin-bottom: 5mm;
   }
   #receipt_pub{
     display: inline-block;
@@ -111,13 +129,9 @@
   }
 }
 
-@page{
-  width: 80mm;
-  margin:0;
-}
 
 @media screen {
-  #receipt{
+  .print_only{
     display: none;
   }
 }
