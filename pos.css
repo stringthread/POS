@@ -29,8 +29,8 @@
     display: block;
     width: 100%;
     text-align: center;
-    font-size: 1.5em;
-    margin:10mm auto;
+    font-size: 2rem;
+    margin:10mm 5mm auto;
   }
   #deco{
     margin: 8mm 6mm;
@@ -49,7 +49,7 @@
     display:block;
     width: 100%;
     text-align: center;
-    margin: 0;
+    margin: 0 auto;
     margin-top: 5mm;
   }
   .print_hidden{

@@ -80,7 +80,7 @@ var fin=function(){
     }
     break;
     case 1:
-    if(!item[0][0] in item_table || item[0][4]==0)return false;
+    if(!item[0][0] in item_table)return false;
     break;
   }
   return true;
@@ -98,6 +98,7 @@ var deco_input=function(e){
       if(tmp_int in deco_table){
         deco=tmp_int;
         next();
+        return;
       }else{
         window.alert("バーコードの読み取りに失敗しました。読み直してください");
       }
@@ -191,7 +192,7 @@ var item_draw=function(){
     inner+="</div>\r\n<div class=\"item_price\">&yen";
     inner+=item[key][2];
     inner+="</div><div class=\"item_num\">&times";
-    inner+=(item[key][3]==0)?"(1)":item[key][3];
+    inner+=(item[key][3]==0)?((mode==1)?"(1)":1):item[key][3];
     inner+="</div><div class=\"item_subtotal\">&yen";
     inner+=(item[key][4]==0)?item[key][2]:item[key][4];
     inner+="</div></div>";
