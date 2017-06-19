@@ -42,7 +42,7 @@ var init=function(){
     case 1:
     subtitle.innerHTML="商品入力";
     container.innerHTML="<div id=\"item_container\"><div id=\"item_total\">合計 : &yen;0</div></div>";
-    document.getElementById("method").innerHTML="Shift+Enterで次の画面<br>Escapeで前の画面<br>Backspaceで個数を1桁消去<br>Deleteキーで品目を削除<br>上下キーで品目を選択<br><br>商品のバーコードを読み込んだ後、数字キーで個数を入力";
+    document.getElementById("method").innerHTML="Shift+Enterで次の画面<br>Escapeで前の画面<br>Backspaceで個数を1桁消去<br>Deleteキーで品目を削除<br>上下キーで品目を選択<br><br>商品のバーコードを読み込んだ後、数字キーまたは左右矢印キーで個数を入力";
     document.getElementById("receipt").innerHTML="";
     document.removeEventListener('keydown',deco_input);
     document.addEventListener('keydown',item_input);
