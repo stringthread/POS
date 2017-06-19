@@ -35,7 +35,7 @@ var init=function(){
     case 0:
     subtitle.innerHTML="デコ選択";
     container.innerHTML="<div class=\"input\" id=\"deco_input\"></div>";
-    document.getElementById("method").innerHTML="Shift+Enterで次の画面<br>Escapeでリセット";
+    document.getElementById("method").innerHTML="デコのバーコードを読み込んでください";
     document.getElementById("receipt").innerHTML="";
     document.addEventListener('keydown',deco_input);
     break;
@@ -97,7 +97,7 @@ var deco_input=function(e){
     if(is_barcode){
       if(tmp_int in deco_table){
         deco=tmp_int;
-        document.getElementById("deco_input").innerHTML=deco_table[tmp_int][1];
+        next();
       }else{
         window.alert("バーコードの読み取りに失敗しました。読み直してください");
       }
