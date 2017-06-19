@@ -93,6 +93,10 @@ var next=function(){
 }
 
 var deco_input=function(e){
+  if(e.key=="Tab"){
+    e.preventDefault();
+    e.stopPropagation();
+  }
   if(e.key==ID_BARCODE){
     if(is_barcode){
       if(tmp_int in deco_table){
@@ -109,10 +113,13 @@ var deco_input=function(e){
   if(is_barcode&&isFinite(e.key)){
     tmp_int=tmp_int*10+parseInt(e.key);
   }
-  e.preventDefault();
 }
 
 var item_input=function(e){
+  if(e.key=="Tab"){
+    e.preventDefault();
+    e.stopPropagation();
+  }
   if(isFinite(e.key)){
     if(!is_barcode&&select<=ctr)tmp_int=item[select][3];
     tmp_int=tmp_int*10+parseInt(e.key);
@@ -176,7 +183,6 @@ var item_input=function(e){
     if(item.length==0)item[0]=[0,"",0,0,0];
     item_draw();
   }
-  e.preventDefault();
 };
 
 var item_draw=function(){
