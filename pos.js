@@ -18,12 +18,7 @@ var init=function(){
   tmp_int=0;
   tmp_arr=[0,"",0,0,0];
   is_barcode=false;
-  document.getElementById("date").innerHTML=new Date().toLocaleString("ja", {
-	"year": "numeric",
-	"month": "2-digit",
-	"day": "2-digit",
-	"hour": "2-digit",
-	"minute": "2-digit"});
+  document.getElementById("date").innerHTML=getNow(1);
   if(deco)document.getElementById("deco").innerHTML="デコ : "+deco_table[deco][1];
   else document.getElementById("deco").innerHTML="";
   document.addEventListener('keydown',function(e){
@@ -232,20 +227,35 @@ var receipt_draw=function(){
   tmp_str+="</div><div id=\"receipt_price\">&yen; ";
   tmp_str+=total.toLocaleString();
   tmp_str+="&ndash;</div><div id=\"receipt_proviso\">但し、文実販売代金として</div><div id=\"receipt_date\">発行日 : ";
-  tmp_str+=getNow();
+  tmp_str+=getNow(0);
   tmp_str+="</div><div id=\"receipt_pub\">筑波大附属駒場中高<br>第"+nth+"回文化祭実行委員会</div><div id=\"receipt_stamp\"></div>"
   document.getElementById("receipt").innerHTML=tmp_str;
   tmp_str="";
 };
 
-var getNow=function(){
+var getNow=function(type){
   var date=new Date();
-  var str_date=date.getFullYear();
+  var str_date="";
+  switch(type){
+    case 0:
+  str_date=date.getFullYear();
   str_date+="年";
   str_date+=date.getMonth()+1;
   str_date+="月";
   str_date+=date.getDate();
   str_date+="日";
+  break;
+  case 1:
+str_date=date.getFullYear();
+str_date+="/";
+str_date+=date.getMonth()+1;
+str_date+="/";
+str_date+=date.getDate();
+str_date+="&nbsp;";
+str_date+=date.getHours();
+str_date+=":";
+str_date+=date.getMinutes();
+}
   return str_date;
 }
 
