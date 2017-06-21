@@ -9,7 +9,7 @@ try{
   $db=new mysqli(DBHOST,DBUSER,DBPASS,DBNAME);
   switch($_POST['mode']){
     case 'serial':
-    $result=$db->query('SELECT id FROM log ORDER BY id LIMIT 1;');
+    $result=$db->query('SELECT id FROM log ORDER BY id DESC LIMIT 1;');
     if($result->num_rows!=0)echo $result->fetch_row()[0]+1;
     else echo 1;
     break;
