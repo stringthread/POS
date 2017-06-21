@@ -18,7 +18,12 @@ var init=function(){
   tmp_int=0;
   tmp_arr=[0,"",0,0,0];
   is_barcode=false;
-  document.getElementById("date").innerHTML=getNow();
+  document.getElementById("date").innerHTML=new Date().toLocaleString("ja", {
+	"year": "numeric",
+	"month": "2-digit",
+	"day": "2-digit",
+	"hour": "2-digit",
+	"minute": "2-digit"});
   if(deco)document.getElementById("deco").innerHTML="デコ : "+deco_table[deco][1];
   else document.getElementById("deco").innerHTML="";
   document.addEventListener('keydown',function(e){
@@ -130,8 +135,9 @@ var item_input=function(e){
     }
   }
   if(e.key=="Backspace"){
-    if(!is_barcode){
+    if(!is_barcode&&select<=ctr){
       item[select][3]=Math.floor(item[select][3]/10);
+      item[select][4]=item[select][2]*item[select][3];
       item_draw();
     }
   }
@@ -227,7 +233,7 @@ var receipt_draw=function(){
   tmp_str+=total.toLocaleString();
   tmp_str+="&ndash;</div><div id=\"receipt_proviso\">但し、文実販売代金として</div><div id=\"receipt_date\">発行日 : ";
   tmp_str+=getNow();
-  tmp_str+="</div><div id=\"receipt_pub\">筑波大附属駒場中高<br>第"+nth+"回文化祭実行委員会</div><div id=\"receipt_stamp\">印</div>"
+  tmp_str+="</div><div id=\"receipt_pub\">筑波大附属駒場中高<br>第"+nth+"回文化祭実行委員会</div><div id=\"receipt_stamp\"></div>"
   document.getElementById("receipt").innerHTML=tmp_str;
   tmp_str="";
 };

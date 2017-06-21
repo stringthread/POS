@@ -27,13 +27,12 @@
   }
   #subtitle{
     display: block;
-    width: 100%;
     text-align: center;
     font-size: 2rem;
     margin:10mm 5mm auto;
   }
   #deco{
-    margin: 8mm 6mm;
+    margin: 8mm 6mm 3mm;
   }
   .item{
     white-space: pre-wrap;
@@ -47,10 +46,8 @@
   }
   #receipt_caption{
     display:block;
-    width: 100%;
     text-align: center;
-    margin: 0 auto;
-    margin-top: 5mm;
+    margin: 5mm auto 0;
   }
   .print_hidden{
     display: none;
@@ -58,6 +55,7 @@
   #date{
     width: 100%;
     text-align: right;
+    margin: 0;
   }
   body>*:first-child:not(.print_hidden){
     margin-top:10mm;
@@ -119,9 +117,6 @@
     width: 30mm;
     height: 30mm;
     margin: 0;
-    text-align: center;
-    vertical-align: middle;
-    font-size: 1.5rem;
     border: solid 1px #000;
   }
   #item_total{
