@@ -22,16 +22,6 @@ var init=function(){
   document.getElementById("date").innerHTML=getNow(1);
   if(deco)document.getElementById("deco").innerHTML="デコ : "+deco_table[deco][1];
   else document.getElementById("deco").innerHTML="";
-  document.addEventListener('keydown',function(e){
-    if(e.shiftKey&&e.key=="Enter"){
-      next();
-    }
-    if(e.key=="Escape"){
-      mode--;
-      if(mode<=0)document.location.reload();
-      init();
-    }
-  });
   switch(mode){
     case 0:
     subtitle.innerHTML="デコ選択";
@@ -45,6 +35,7 @@ var init=function(){
     container.innerHTML="<div id=\"item_container\"><div id=\"item_total\">合計 : &yen;0</div></div>";
     document.getElementById("method").innerHTML="Shift+Enterで次の画面<br>Escapeで前の画面<br>Backspaceで個数を1桁消去<br>Deleteキーで品目を削除<br>上下キーで品目を選択<br><br>商品のバーコードを読み込んだ後、数字キーまたは左右矢印キーで個数を入力";
     document.getElementById("receipt").innerHTML="";
+    item_draw();
     document.removeEventListener('keydown',deco_input);
     document.addEventListener('keydown',item_input);
     break;
@@ -130,7 +121,6 @@ var deco_input=function(e){
     tmp_int=tmp_int*10+parseInt(e.key);
   }
   if(e.shiftKey&&e.key=="P"){
-    alert("called");
     receipt_prev();
     e.preventDefault();
     e.stopPropagation();
@@ -192,12 +182,14 @@ var item_input=function(e){
   }
   if(e.key=="ArrowRight"){
     item[select][3]++;
+    tmp_int++;
     item[select][4]=item[select][2]*item[select][3];
     item_draw();
   }
   if(e.key=="ArrowLeft"){
-    if(item[select][3]>=1){
+    if(item[select][3]>1){
       item[select][3]--;
+      tmp_int=max(tmp_int-1,1);
       item[select][4]=item[select][2]*item[select][3];
       item_draw();
     }
@@ -371,4 +363,16 @@ var sendDeal=function(){
     };
 };
 
-window.onload=init;
+window.onload=function(){
+  document.addEventListener('keydown',function(e){
+    if(e.shiftKey&&e.key=="Enter"){
+      next();
+    }
+    if(e.key=="Escape"){
+      mode--;
+      if(mode<=0)document.location.reload();
+      init();
+    }
+  });
+  init();
+}
