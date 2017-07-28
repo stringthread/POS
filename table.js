@@ -1,4 +1,4 @@
-var deco_table={
+﻿var deco_table={
   001:[0,"庶務"],
   002:[1,"SCC"],
   003:[2,"装飾"],
