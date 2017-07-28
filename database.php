@@ -21,6 +21,14 @@ try{
       echo 0;
     }else echo -1;
     break;
+    case 'receipt_prev':
+    $result=$db->query('SELECT id,deco,item,date FROM log ORDER BY id DESC LIMIT 1;');
+    if($result->num_rows==0){
+      echo "";
+      break;
+    }
+    echo json_encode($result->fetch_assoc());
+    break;
     case 'log_deco':
     $stmt=$db->prepare('SELECT id,item,date FROM log WHERE deco=?;');
     $stmt->bind_param('i',$_POST['deco']);
